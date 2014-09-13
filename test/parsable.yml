@@ -1,0 +1,55 @@
+episodes:
+  'archer.s01e01.mkv':
+    show: Archer
+    season: 1
+    episode: 1
+    extension: mkv
+
+  'parks.and.recreation.s06e11.avi':
+    show: Parks And Recreation
+    season: 6
+    episode: 11
+    extension: avi
+
+  'community.1x20.mp4':
+    show: Community
+    season: 1
+    episode: 20
+    extension: mp4
+
+  'grey.s.anatomy.s01e01.mkv':
+    show: Grey's Anatomy
+    season: 1
+    episode: 1
+    extension: mkv
+
+  'breaking_bad.s05e16.junk203q3.fqwf.fqw.xxx.333.0303.mkv':
+    show: Breaking Bad
+    season: 5
+    episode: 16
+    extension: mkv
+
+  'Orphan Black - s01e02.mkv':
+    show: Orphan Black
+    season: 1
+    episode: 2
+    extension: mkv
+
+subtitles:
+  'archer.s01e01.eng.srt':
+    show: Archer
+    season: 1
+    episode: 1
+    extension: srt
+
+  "Grey's Anatomy.3x1.addic7ed.srt":
+    show: Grey's Anatomy
+    season: 3
+    episode: 1
+    extension: srt
+
+  "It's Always Funny in Philadelphia.s09e09.sweden.srt":
+    show: It's Always Funny In Philadelphia
+    season: 9
+    episode: 9
+    extension: srt
