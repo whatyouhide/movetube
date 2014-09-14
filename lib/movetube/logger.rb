@@ -8,6 +8,9 @@ class Movetube::Logger
   # The error mark that is prepended to error messages.
   ERROR_MARK = '✗'.colorize(:red)
 
+  # The warning mark that is prepeded to warning messages.
+  WARNING_MARK = '⚠'.colorize(:yellow)
+
   # Print out an error to `err`.
   # @param [String] msg The message to print
   # @param [IO] err An IO stream
@@ -22,6 +25,15 @@ class Movetube::Logger
   # @param [IO] out An IO stream
   # @return [void]
   def self.success(msg, out = $stdout)
+    msg = "#{SUCCESS_MARK} #{msg}"
+    puts(msg, out)
+  end
+
+  # Print out a *warning* message to stdout.
+  # @param [String] msg The message to print
+  # @param [IO] out
+  # @return [void]
+  def self.warning(msg, out = $stdout)
     msg = "#{SUCCESS_MARK} #{msg}"
     puts(msg, out)
   end

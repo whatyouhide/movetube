@@ -1,0 +1,5 @@
+warning:
+error:
+  no_destination_dir: >
+    No destination directory has been set. Specify it inside ~/.movetuberc or
+    with the --dest option.
