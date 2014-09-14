@@ -23,18 +23,15 @@ class Movetube::Node
   #   metadata inferred from the filename.
   # @option forced_data [String] :show The show name
   # @option forced_data [String,Fixnum] :season The season number
-  # @option forced_data [String,Fixnum] :episode The episode number
-  # @option forced_data [String] :extension The extension of the file, without
-  #   the leading `"."`
   def initialize(path, forced_data = {})
     @path = path
     @filename = File.basename(path)
     data = Movetube::Parser.parse(@filename)
 
+    @extension = data[:extension]
+    @episode = data[:episode]
     @show = forced_data[:show] || data[:show]
     @season = forced_data[:season] || data[:season]
-    @episode = forced_data[:episode] || data[:episode]
-    @extension = forced_data[:extension] || data[:extension]
   end
 
   # Whether the file is a valid episode or subtitle.
