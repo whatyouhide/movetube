@@ -16,7 +16,7 @@ class Movetube::Parser
   # @return [Hash] An hash with keys `:show`, `:season`, `:episode` and
   #  `:extension`.
   def self.parse(filename)
-    self.new.parse(filename)
+    new.send :parse, filename
   end
 
   # Whether the given filename is parsable as an episode/subtitle or not.
@@ -24,8 +24,10 @@ class Movetube::Parser
   #   path).
   # @return [Boolean]
   def self.parsable?(filename)
-    !self.new.parse(filename).has_value?(nil)
+    !new.send(:parse, filename).has_value?(nil)
   end
+
+  private
 
   # This method is here so that `Parser.parse` can create a new `Parser`
   # instance and call this method on it. It's not meant to be used publicly.
@@ -33,7 +35,6 @@ class Movetube::Parser
   # @param [String] filename The filename (which is the *basename*, not the full
   #   path).
   # @return [Hash]
-  # @private
   # @see Movetube::Parser.parse
   def parse(filename)
     @filename = clean_filename(filename)
@@ -45,8 +46,6 @@ class Movetube::Parser
       extension: extract_extension
     }
   end
-
-  private
 
   # Convert each occurrence of `"_"` in `"."` in the given `filename`.
   # @param [String] filename

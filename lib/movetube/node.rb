@@ -1,15 +1,17 @@
 require 'movetube/parser'
 
 # A generic node is an episode or a subtitle which points to a file on the disk.
+# @todo Add more documentation on how to use a Node by itself, requiring it
+#   specifically to use it programmatically, not with a command line tool.
 class Movetube::Node
   # @!attribute [r] show
-  #   @return the show name
+  #   @return [String] the show name
   # @!attribute [r] season
-  #   @return the season number
+  #   @return [Fixnum] the season number
   # @!attribute [r] episode
-  #   @return the episode number
+  #   @return [Fixnum] the episode number
   # @!attribute [r] extension
-  #   @return the extension of the source file
+  #   @return [String] the extension of the source file
   attr_reader :show, :season, :episode, :extension
 
   # All the recognized extensions, both for video files and subtitles.
@@ -17,15 +19,22 @@ class Movetube::Node
 
   # Create a new `Node` from a given `path`.
   # @param [String] path The path that points to the node's source file.
-  def initialize(path)
+  # @param [Hash] forced_data Metadata from this hash will be preferred over
+  #   metadata inferred from the filename.
+  # @option forced_data [String] :show The show name
+  # @option forced_data [String,Fixnum] :season The season number
+  # @option forced_data [String,Fixnum] :episode The episode number
+  # @option forced_data [String] :extension The extension of the file, without
+  #   the leading `"."`
+  def initialize(path, forced_data = {})
     @path = path
     @filename = File.basename(path)
     data = Movetube::Parser.parse(@filename)
 
-    @show = data[:show]
-    @season = data[:season]
-    @episode = data[:episode]
-    @extension = data[:extension]
+    @show = forced_data[:show] || data[:show]
+    @season = forced_data[:season] || data[:season]
+    @episode = forced_data[:episode] || data[:episode]
+    @extension = forced_data[:extension] || data[:extension]
   end
 
   # Whether the file is a valid episode or subtitle.
