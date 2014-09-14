@@ -9,10 +9,13 @@ Gem::Specification.new do |spec|
   spec.version       = Movetube::VERSION
   spec.authors       = ['Andrea Leopardi']
   spec.email         = 'an.leopardi@gmail.com'
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
   spec.homepage      = ''
   spec.license       = 'MIT'
+  spec.summary       = 'Rename and move TV show episodes and subtitles.'
+  spec.description   = <<-DESC
+    Extract the metadata from the TV show episodes and subtitles filenames and
+    use them to rename and/or move those files around.
+  DESC
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
@@ -25,4 +28,5 @@ Gem::Specification.new do |spec|
 
   # Runtime dependencies.
   spec.add_runtime_dependency 'colorize'
+  spec.add_runtime_dependency 'cri'
 end
