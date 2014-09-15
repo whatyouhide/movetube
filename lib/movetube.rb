@@ -3,9 +3,11 @@ require 'ostruct'
 require 'movetube/version'
 require 'movetube/constants'
 require 'movetube/node'
+require 'movetube/exceptions'
 require 'movetube/logger'
+require 'movetube/file_manager'
+require 'movetube/cli_worker'
 require 'movetube/cli'
-require 'movetube/cli_options'
 
 module Movetube
   class << self
