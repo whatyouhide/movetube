@@ -55,7 +55,7 @@ class Movetube::FileManager
     node = create_node_from_pathname(pathname)
 
     unless node.valid?
-      @logger.info "#{'Skipping'.colorize :white}: #{pathname.basename}"
+      @logger.info "#{'Skipping'.colorize :white}: #{pathname}"
       return
     end
 

@@ -3,9 +3,11 @@ require 'cri'
 Movetube::CLI = Cri::Command.define do
   # Command infos.
   name        'movetube'
-  usage       'TODO'
+  usage       'movetube SRC1, SRC2... [options]'
   summary     'Rename and/or move TV show episodes and subtitles.'
-  description 'TODO'
+  description 'Movetube is an utility to rename/remove tv show episodes and ' +
+    'subtitles. All the command line options can be seen with ' +
+    '`movetube --help`.'
 
   # Help flag.
   flag :h, :help, 'Show this help'

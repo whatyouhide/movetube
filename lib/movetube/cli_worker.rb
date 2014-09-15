@@ -1,7 +1,7 @@
 require 'yaml'
+require 'colorize'
 
 # CLI for the movetube executable.
-# @todo Never use `exit`. Instead, raise exceptions and handle that.
 class Movetube::CLIWorker
   # Some messages to show on the console.
   MESSAGES = YAML.load_file File.expand_path('../../../messages.yml', __FILE__)
@@ -26,6 +26,9 @@ class Movetube::CLIWorker
     file_manager.options = prettify_options(@options)
 
     file_manager.go!
+  rescue Errno::ENOENT, Movetube::FatalError => err
+    @logger.error err.message
+    exit false
   end
 
   private
@@ -53,9 +56,9 @@ class Movetube::CLIWorker
   # Return the source directories inferred from the command-line arguments.
   # @return [Array] An array of directories (absolute paths)
   def source_dirs
-    @args
-      .map { |arg| File.expand_path(arg) }
-      .select { |arg| File.directory?(arg) }
+    expanded = @args.map { |arg| File.expand_path(arg) }
+    warn_about_non_directories(expanded)
+    expanded.select { |arg| File.directory?(arg) }
   end
 
   # Return the destination directory (from the config file or the --dest option)
@@ -68,8 +71,19 @@ class Movetube::CLIWorker
     # directory?
     return nil unless @options[:move]
 
-    exit_with_error(:no_destination_dir) unless dest
+    if dest.nil?
+      fail Movetube::NoDestinationDirectoryError,
+        MESSAGES['error']['no_destination_dir']
+    end
+
     File.expand_path(dest)
+  end
+
+  def warn_about_non_directories(files)
+    files.reject { |f| File.directory?(f) }.each do |non_dir|
+      @logger.warning \
+        "#{non_dir.to_s.colorize :blue} doesn't exist or is not a directory"
+    end
   end
 
   # Read default configurations from the `Movetube.config_file` (which is a
@@ -88,18 +102,5 @@ class Movetube::CLIWorker
   def show_help(help_message)
     @logger.print help_message
     exit true
-  end
-
-  # Exit after printing an error message to the console.
-  # @param [String,Symbol] msg If `msg` is a symbol, it will be used to look up
-  #   an error messages in `messages.yml` (under the `"error"` key) with the
-  #   given name.
-  def exit_with_error(msg)
-    if msg.is_a?(Symbol)
-      msg = MESSAGES['error'][msg.to_s]
-    end
-
-    @logger.error msg
-    exit false
   end
 end

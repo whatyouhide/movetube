@@ -1,29 +1,18 @@
 # Movetube
 
-TODO: Write a gem description
+Movetube is an utility to rename/remove tv show episodes and subtitles. All the
+command line options can be seen with `movetube --help`.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-    gem 'movetube'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
+Install with:
 
     $ gem install movetube
 
 ## Usage
 
-TODO: Write usage instructions here
+    $ movetube --help
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/movetube/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+Fork and PR!

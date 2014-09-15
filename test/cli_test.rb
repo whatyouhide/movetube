@@ -28,7 +28,7 @@ class CLITest < MiniTest::Unit::TestCase
   def test_error_if_no_destination_dir
     backup_and_remove_config_file
     out, err = capture_subprocess_io do
-      success = system 'bin/movetube ./srcdir --move'
+      success = system 'bin/movetube /tmp --move'
       refute success
     end
     recreate_config_file

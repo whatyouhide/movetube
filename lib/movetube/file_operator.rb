@@ -18,7 +18,7 @@ module Movetube
         @logger.info "Would create directory: #{path.to_s.colorize :magenta}"
       else
         path.mkpath
-        @logger.success "Created directory: #{path}"
+        @logger.success "Created directory: #{path.to_s.colorize :magenta}"
       end
 
       path
