@@ -43,6 +43,19 @@ class LoggerTest < MiniTest::Unit::TestCase
     assert_match /error/, io.string
   end
 
+  def test_silent_mode
+    out, err = capture_io do
+      logger = std_logger.tap { |l| l.silence! }
+      logger.print 'hello'
+      logger.success 'oh no!'
+      logger.warning 'meh'
+      logger.error 'hola amigo'
+    end
+
+    assert_empty out
+    assert_match /hola amigo/, err
+  end
+
   private
 
   # I have to create a logger dynamically (and not in the `setup` method) in
