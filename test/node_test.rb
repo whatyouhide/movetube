@@ -28,6 +28,30 @@ class NoteTest < MiniTest::Unit::TestCase
     end
   end
 
+  def test_language_setter
+    episode = keys_to_nodes(@parsable_episodes).first
+    assert_nil episode.language
+    assert_raises(Movetube::NotASubtitleError) { episode.language = 'foo' }
+
+    subtitle = keys_to_nodes(@parsable_subtitles).first
+    assert_nil subtitle.language
+    subtitle.language = 'foo'
+    assert_equal 'foo', subtitle.language
+  end
+
+  def test_format
+    @parsable_episodes.each do |filename, data|
+      episode = Movetube::Node.new(filename)
+      assert_equal data['formatted'], episode.format
+    end
+
+    @parsable_subtitles.each do |filename, data|
+      subtitle = Movetube::Node.new(filename)
+      subtitle.language = data['_language']
+      assert_equal data['formatted'], subtitle.format
+    end
+  end
+
   private
 
   def assert_metadata(data, node)
