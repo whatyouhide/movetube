@@ -63,7 +63,12 @@ class Movetube::CLIWorker
   # @return [String] The absolute path of the destination directory
   def destination_dir
     dest = @options.fetch(:dest, Movetube.config.destination_dir)
-    exit_with_error(:no_destination_dir) if dest.nil? && @options[:move]
+
+    # If we don't have to move the files, who cares about the destination
+    # directory?
+    return nil unless @options[:move]
+
+    exit_with_error(:no_destination_dir) unless dest
     File.expand_path(dest)
   end
 

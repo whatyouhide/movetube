@@ -6,6 +6,7 @@ require 'movetube/node'
 require 'movetube/exceptions'
 require 'movetube/logger'
 require 'movetube/file_manager'
+require 'movetube/file_operator'
 require 'movetube/cli_worker'
 require 'movetube/cli'
 

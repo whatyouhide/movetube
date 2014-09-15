@@ -20,6 +20,8 @@ module Movetube
         path.mkpath
         @logger.success "Created directory: #{path}"
       end
+
+      path
     end
 
     # Rename `src_path` to `new_name`. Only the last component of `src_path` is
@@ -40,6 +42,8 @@ module Movetube
         File.rename(src_path.to_s, dest.to_s)
         @logger.success "Renamed #{src_colored} to #{dest_colored}"
       end
+
+      dest
     end
 
     # Move `src` to `dst`.

@@ -16,6 +16,15 @@ class FileOperatorTest < MiniTest::Unit::TestCase
     @existing_tempfile.delete if @existing_tempfile.exist?
   end
 
+  def test_mkpath_always_returns_its_argument
+    capture_io do
+      assert_equal @existing_tmpdir, dry.mkpath(@existing_tmpdir)
+      assert_equal @existing_tmpdir, wet.mkpath(@existing_tmpdir)
+      assert_equal @nonexisting_tmpdir, dry.mkpath(@nonexisting_tmpdir)
+      assert_equal @nonexisting_tmpdir, wet.mkpath(@nonexisting_tmpdir)
+    end
+  end
+
   def test_mkpath_doesnt_do_anything_if_the_directory_already_exists
     out, err = capture_io { wet.mkpath(@existing_tmpdir) }
     assert_empty out
@@ -27,7 +36,6 @@ class FileOperatorTest < MiniTest::Unit::TestCase
 
     assert_empty err
     assert_match /would create directory/i, out
-    assert_contains @nonexisting_tmpdir.to_s, out
 
     # No directory has actually been created.
     refute @nonexisting_tmpdir.exist?
@@ -38,7 +46,6 @@ class FileOperatorTest < MiniTest::Unit::TestCase
 
     assert_empty err
     assert_match /created directory/i, out
-    assert_contains @nonexisting_tmpdir.to_s, out
     assert_predicate @nonexisting_tmpdir, :exist?
   end
 
@@ -48,14 +55,24 @@ class FileOperatorTest < MiniTest::Unit::TestCase
     end
   end
 
+  def test_rename_returns_the_new_pathname
+    capture_io do
+      new = dry.rename(@existing_tempfile, 'mac')
+      assert_instance_of Pathname, new
+      assert_equal (@existing_tempfile.dirname + 'mac'), new
+
+      new = wet.rename(@existing_tempfile, 'baz')
+      assert_instance_of Pathname, new
+      assert_equal (@existing_tempfile.dirname + 'baz'), new
+    end
+  end
+
   def test_rename_with_dry_run_on
     new_path = @existing_tempfile.dirname + 'foo'
     out, err = capture_io { dry.rename(@existing_tempfile, 'foo') }
 
     assert_empty err
     assert_match /would rename/i, out
-    assert_contains @existing_tempfile.to_s, out
-    assert_contains new_path.to_s, out
 
     # No modifications have actually been made.
     assert_predicate @existing_tempfile, :exist?
@@ -68,8 +85,6 @@ class FileOperatorTest < MiniTest::Unit::TestCase
 
     assert_empty err
     assert_match /renamed/i, out
-    assert_contains @existing_tempfile.to_s, out
-    assert_contains new_path.to_s, out
 
     # Check that actual modifications have been made.
     assert_predicate new_path, :exist?

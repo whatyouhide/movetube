@@ -18,7 +18,7 @@ Movetube::CLI = Cri::Command.define do
   flag nil, :'no-verbose', 'Disable verbosity (is on by default)'
 
   # Dry run.
-  flag nil, :'dry-run', "Don't actually do anything"
+  flag :n, :'dry-run', "Don't actually do anything"
 
   # Move files to a different destination directory than the default one.
   required :d, :dest, 'A destination directory which is not the default one'
