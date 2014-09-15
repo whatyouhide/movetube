@@ -25,20 +25,10 @@ class CLITest < MiniTest::Unit::TestCase
     assert_is_help_message out
   end
 
-  def test_verbose_flag
-    out, err = capture_io do
-      run_with_argv ['foo', '--no-verbose', '--dest', 'bar']
-      refute Movetube.config.verbose
-
-      run_with_argv ['foo', '--dest', 'bar']
-      assert Movetube.config.verbose
-    end
-  end
-
   def test_error_if_no_destination_dir
     backup_and_remove_config_file
     out, err = capture_subprocess_io do
-      success = system 'bin/movetube ./srcdir'
+      success = system 'bin/movetube ./srcdir --move'
       refute success
     end
     recreate_config_file
