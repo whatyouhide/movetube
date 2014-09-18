@@ -57,7 +57,7 @@ module Movetube
       else
         @logger.info 'Moving...'
         FileUtils.mv src.to_s, dst.to_s
-        @logger.info \
+        @logger.success \
           "Moved #{src.to_s.colorize :blue} to #{dst.to_s.colorize :blue}"
       end
     end
