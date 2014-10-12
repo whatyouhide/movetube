@@ -26,7 +26,7 @@ Movetube::CLI = Cri::Command.define do
   required :d, :dest, 'A destination directory which is not the default one'
 
   # Subtitles language.
-  required :l, :lang, 'The language for the subtitles'
+  required :s, :lang, 'The language for the subtitles'
 
   # Show, season and episode options.
   required nil, :show, 'Force a show name'

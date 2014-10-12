@@ -1,6 +1,8 @@
 # Movetube
 
-Movetube is an utility to rename/remove tv show episodes and subtitles. All the
+![](http://i.imgur.com/nckS3Y2.png)
+
+Movetube is an utility to rename/remove TV show episodes and subtitles. All the
 command line options can be seen with `movetube --help`.
 
 ## Installation
