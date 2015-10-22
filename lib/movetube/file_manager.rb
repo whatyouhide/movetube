@@ -45,7 +45,13 @@ class Movetube::FileManager
       return
     end
 
-    children.each { |child| take_care_of_file(child) }
+    children.each do |child|
+      if child.directory?
+        take_care_of_directory(child) if @options[:recursive]
+      else
+        take_care_of_file(child)
+      end
+    end
   end
 
   # Operate on a single file identified by `pathname`.

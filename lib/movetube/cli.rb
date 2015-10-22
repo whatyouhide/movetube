@@ -16,6 +16,8 @@ Movetube::CLI = Cri::Command.define do
   flag :r, :rename, 'Rename files in the source directory'
   flag :m, :move, 'Move files from the source directory to the destination'
 
+  flag :R, :recursive, 'Recursively find files in the given directories'
+
   # Verbose (which is on by default).
   flag nil, :'no-verbose', 'Disable verbosity (is on by default)'
 
