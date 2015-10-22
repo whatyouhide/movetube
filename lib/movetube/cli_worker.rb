@@ -1,4 +1,5 @@
 require 'yaml'
+require 'json'
 require 'colorize'
 
 # CLI for the movetube executable.
@@ -91,10 +92,11 @@ class Movetube::CLIWorker
   # @return [void]
   def read_default_configs
     return unless File.exist?(Movetube.config_file)
-    configs = YAML.load_file(Movetube.config_file)
+    configs = JSON.parse(File.read(Movetube.config_file))
     return false unless configs
 
     Movetube.config.destination_dir = configs['destination_dir']
+    Movetube.config.aliases = configs['aliases']
   end
 
   # Show a given help message and **exit** with 0.

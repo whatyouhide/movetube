@@ -31,7 +31,7 @@ class Movetube::Node
 
     @extension = data[:extension]
     @episode = data[:episode]
-    @show = forced_data[:show] || data[:show]
+    @show = forced_data[:show] || resolve_alias(data[:show])
     @season = forced_data[:season] || data[:season]
   end
 
@@ -82,5 +82,13 @@ class Movetube::Node
   # Whether the extension of this node is a recognized extension.
   def valid_extension?
     VALID_EXTENSIONS.include?(@extension)
+  end
+
+  def resolve_alias(show)
+    real, _aliases = Movetube.config.aliases.find(proc { show }) do |(real, aliases)|
+      aliases.include?(show) && real
+    end
+
+    real
   end
 end

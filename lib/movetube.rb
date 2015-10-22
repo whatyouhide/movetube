@@ -17,5 +17,12 @@ module Movetube
   end
 
   Movetube.config ||= OpenStruct.new
-  Movetube.config_file = File.join(Dir.home, '.movetuberc')
+  Movetube.config_file = File.join(Dir.home, '.movetube.json')
+end
+
+# Apparently colorize doesn't work anymore?
+class String
+  def colorize(col)
+    self
+  end
 end
